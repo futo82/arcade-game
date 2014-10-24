@@ -6,8 +6,7 @@ var Enemy = function() {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
-    this.x = -10;
-    this.y = 60;
+    this.init();
 }
 
 // Update the enemy's position, required method for game
@@ -16,6 +15,10 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
+    this.x += (this.speed * dt);
+    if (this.x >= enemyMaxTileWidth) {
+        this.init();
+    }
 }
 
 // Draw the enemy on the screen, required method for game
@@ -23,30 +26,32 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
 
+Enemy.prototype.init = function() {
+    this.x = -100;
+    this.y = 63 + (Math.floor(Math.random() * 3) * enemyYTileDelta); // 63, 146, 229
+    this.speed = allSpeeds[Math.floor(Math.random() * allSpeeds.length)];
+}
+
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
 var Player = function() {
-    this.sprite = allSprites[Math.floor(Math.random() * 5)];
+    this.sprite = allSprites[Math.floor(Math.random() * allSprites.length)];
     this.init();
 }
 
 Player.prototype.update = function() {
-    var minWidth = 0, minHeight = 0;
-    var maxWidth = ((numCols - 1) * playerXDelta);
-    var maxHeight = -20 + ((numRows - 1) * playerYDelta);
-
-    if (this.x > minWidth && this.keyPressed === 'left') {
-        this.x -= playerXDelta;
+    if (this.x > OriginX && this.keyPressed === 'left') {
+        this.x -= playerXTileDelta;
     }
-    if (this.x < maxWidth && this.keyPressed === 'right') {
-        this.x += playerXDelta;
+    if (this.x < playerMaxTileWidth && this.keyPressed === 'right') {
+        this.x += playerXTileDelta;
     }
-    if (this.y > minHeight && this.keyPressed === 'up') {
-        this.y -= playerYDelta;
+    if (this.y > OriginY && this.keyPressed === 'up') {
+        this.y -= playerYTileDelta;
     }
-    if (this.y < maxHeight && this.keyPressed === 'down') {
-        this.y += playerYDelta;
+    if (this.y < playerMaxTileHeight && this.keyPressed === 'down') {
+        this.y += playerYTileDelta;
     }
     if (this.y < 40) {
         this.init();
@@ -63,8 +68,8 @@ Player.prototype.handleInput = function(keyPressed) {
 }
 
 Player.prototype.init = function() {
-    this.x = Math.floor(numCols / 2) * playerXDelta;
-    this.y = -20 + ((numRows - 1) * playerYDelta);
+    this.x = Math.floor(numCols / 2) * playerXTileDelta;
+    this.y = -20 + ((numRows - 1) * playerYTileDelta);
     this.keyPressed = null;
 }
 
@@ -81,10 +86,19 @@ var allSprites = [
 
 var numRows = 6;
 var numCols = 5;
-var playerXDelta = 101;
-var playerYDelta = 80;
+var OriginX = 0, OriginY = 0;
+var playerXTileDelta = 101, playerYTileDelta = 80;
+var playerMaxTileWidth = ((numCols - 1) * playerXTileDelta);
+var playerMaxTileHeight = -20 + ((numRows - 1) * playerYTileDelta);
+
+var allSpeeds = [100, 125, 150, 175, 200, 225, 250, 275, 300, 325, 350];
+var enemyYTileDelta = 83, enemyXTileDelta = 101;
+var enemyMaxTileWidth = numCols * enemyXTileDelta;
 
 var allEnemies = [
+    new Enemy(),
+    new Enemy(),
+    new Enemy(),
     new Enemy()
 ];
 
