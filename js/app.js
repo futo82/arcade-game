@@ -26,20 +26,21 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
 
+// Initialize the enemy object
 Enemy.prototype.init = function() {
     this.x = -100;
     this.y = 63 + (Math.floor(Math.random() * 3) * enemyYTileDelta); // 63, 146, 229
     this.speed = allSpeeds[Math.floor(Math.random() * allSpeeds.length)];
 }
 
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
+// Player that tries to avoid all enemies and road the road
 var Player = function() {
     this.sprite = allSprites[Math.floor(Math.random() * allSprites.length)];
     this.init();
 }
 
+// Update the player's position based on the key pressed 
+// by the player
 Player.prototype.update = function() {
     if (this.x > originX && this.keyPressed === 'left') {
         this.x -= playerXTileDelta;
@@ -59,27 +60,30 @@ Player.prototype.update = function() {
     this.keyPressed = null;
 }
 
+// Draw the player on the screen, required method for game
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
 
+// Store the key pressed by the player
 Player.prototype.handleInput = function(keyPressed) {
    this.keyPressed = keyPressed;
 }
 
+// Initialize the player object
 Player.prototype.init = function() {
     this.x = Math.floor(numCols / 2) * playerXTileDelta;
     this.y = -20 + ((numRows - 1) * playerYTileDelta);
     this.keyPressed = null;
 }
 
+// Reset the player back to its original position
 Player.prototype.reset = function() {
     this.init();
 }
 
-// Now instantiate your objects.
-// Place all enemy objects in an array called allEnemies
-// Place the player object in a variable called player
+// Stores a list of character sprites, used to select
+// select the player image at the start of the game
 var allSprites = [
     'images/char-boy.png', 
     'images/char-princess-girl.png',
@@ -88,17 +92,25 @@ var allSprites = [
     'images/char-cat-girl.png'
 ];
 
+// The number of rows and columns
 var numRows = 6;
 var numCols = 5;
+// Origin of the display
 var originX = 0, originY = 0;
+// Delta used to move the player from one tile to the next
 var playerXTileDelta = 101, playerYTileDelta = 80;
+// Last x tile position the player can occupy
 var playerMaxTileWidth = ((numCols - 1) * playerXTileDelta);
+// Last y tile position the player can occupy
 var playerMaxTileHeight = -20 + ((numRows - 1) * playerYTileDelta);
-
+// A list of enemy speed
 var allSpeeds = [100, 125, 150, 175, 200, 225, 250, 275, 300, 325, 350];
+// Delta used to move the enemy from one tile to the next
 var enemyYTileDelta = 83, enemyXTileDelta = 101;
+// Last x position in which the enemy is totally off the game board
 var enemyMaxTileWidth = numCols * enemyXTileDelta;
 
+// Place all enemy objects in an array called allEnemies
 var allEnemies = [
     new Enemy(),
     new Enemy(),
@@ -106,6 +118,7 @@ var allEnemies = [
     new Enemy()
 ];
 
+// Place the player object in a variable called player
 var player = new Player();
 
 // This listens for key presses and sends the keys to your
