@@ -27,20 +27,25 @@ Enemy.prototype.render = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 var Player = function() {
+    this.sprite = allSprites[Math.floor(Math.random() * 5)];
     this.init();
 }
 
 Player.prototype.update = function() {
-    if (this.x > 0 && this.keyPressed === 'left') {
+    var minWidth = 0, minHeight = 0;
+    var maxWidth = ((numCols - 1) * playerXDelta);
+    var maxHeight = -20 + ((numRows - 1) * playerYDelta);
+
+    if (this.x > minWidth && this.keyPressed === 'left') {
         this.x -= playerXDelta;
     }
-    if (this.x < 404 && this.keyPressed === 'right') {
+    if (this.x < maxWidth && this.keyPressed === 'right') {
         this.x += playerXDelta;
     }
-    if (this.y > 0 && this.keyPressed === 'up') {
+    if (this.y > minHeight && this.keyPressed === 'up') {
         this.y -= playerYDelta;
     }
-    if (this.y < 380 && this.keyPressed === 'down') {
+    if (this.y < maxHeight && this.keyPressed === 'down') {
         this.y += playerYDelta;
     }
     if (this.y < 40) {
@@ -58,9 +63,8 @@ Player.prototype.handleInput = function(keyPressed) {
 }
 
 Player.prototype.init = function() {
-    this.sprite = allSprites[Math.floor(Math.random() * 5)];
-    this.x = 202;
-    this.y = 380;
+    this.x = Math.floor(numCols / 2) * playerXDelta;
+    this.y = -20 + ((numRows - 1) * playerYDelta);
     this.keyPressed = null;
 }
 
@@ -75,6 +79,8 @@ var allSprites = [
     'images/char-cat-girl.png'
 ];
 
+var numRows = 6;
+var numCols = 5;
 var playerXDelta = 101;
 var playerYDelta = 80;
 
