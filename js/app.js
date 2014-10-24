@@ -41,13 +41,13 @@ var Player = function() {
 }
 
 Player.prototype.update = function() {
-    if (this.x > OriginX && this.keyPressed === 'left') {
+    if (this.x > originX && this.keyPressed === 'left') {
         this.x -= playerXTileDelta;
     }
     if (this.x < playerMaxTileWidth && this.keyPressed === 'right') {
         this.x += playerXTileDelta;
     }
-    if (this.y > OriginY && this.keyPressed === 'up') {
+    if (this.y > originY && this.keyPressed === 'up') {
         this.y -= playerYTileDelta;
     }
     if (this.y < playerMaxTileHeight && this.keyPressed === 'down') {
@@ -73,6 +73,10 @@ Player.prototype.init = function() {
     this.keyPressed = null;
 }
 
+Player.prototype.reset = function() {
+    this.init();
+}
+
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
@@ -86,7 +90,7 @@ var allSprites = [
 
 var numRows = 6;
 var numCols = 5;
-var OriginX = 0, OriginY = 0;
+var originX = 0, originY = 0;
 var playerXTileDelta = 101, playerYTileDelta = 80;
 var playerMaxTileWidth = ((numCols - 1) * playerXTileDelta);
 var playerMaxTileHeight = -20 + ((numRows - 1) * playerYTileDelta);

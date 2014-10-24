@@ -30,7 +30,7 @@ var Engine = (function(global) {
 
     function update(dt) {
         updateEntities(dt);
-        // checkCollisions();
+        checkCollisions();
     }
 
     function updateEntities(dt) {
@@ -38,6 +38,15 @@ var Engine = (function(global) {
             enemy.update(dt);
         });
         player.update();
+    }
+
+    function checkCollisions() {
+        allEnemies.forEach(function(enemy) {
+            if (player.x >= (enemy.x - 50) && player.x <= (enemy.x + 50) &&
+                player.y >= (enemy.y - 20) && player.y <= (enemy.y + 20)) {
+                player.reset();
+            }
+        });
     }
 
     function render() {
