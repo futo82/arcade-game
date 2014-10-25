@@ -1,10 +1,5 @@
 // Enemies our player must avoid
 var Enemy = function() {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
-
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
     this.init();
 }
@@ -39,8 +34,7 @@ var Player = function() {
     this.init();
 }
 
-// Update the player's position based on the key pressed 
-// by the player
+// Update the player's position based on the key pressed by the player.
 Player.prototype.update = function() {
     if (this.x > originX && this.keyPressed === 'left') {
         this.x -= playerXTileDelta;
@@ -66,6 +60,7 @@ Player.prototype.render = function() {
 }
 
 // Store the key pressed by the player
+// Parameter: keyPressed, one of the arrow keys pressed by the player
 Player.prototype.handleInput = function(keyPressed) {
    this.keyPressed = keyPressed;
 }
@@ -82,8 +77,58 @@ Player.prototype.reset = function() {
     this.init();
 }
 
-// Stores a list of character sprites, used to select
-// select the player image at the start of the game
+// A life of the player
+// Parameter: x, the x position to render the image
+// Parameter: y, the y position to render the image
+var Life = function(x, y) {
+    this.sprite = 'images/Heart.png';
+    this.x = x;
+    this.y = y;
+}
+
+// Draw the player's life on the screen, required method for game
+Life.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+}
+
+// A gem for the player to collect
+var Gem = function() {
+    this.allRows = [1, 2, 3];
+    this.init();
+}
+
+// Draw the gem on the screen, required method for game
+Gem.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+}
+
+// Initialize the gem object
+Gem.prototype.init = function() {
+    this.sprite = allCollectibles[Math.floor(Math.random() * allCollectibles.length)];
+    this.x = Math.floor(Math.random() * numCols) * gemXTileDelta;
+    this.y = -20 + (this.allRows[Math.floor(Math.random() * this.allRows.length)] * gemYTileDelta);
+}
+
+// Reset the gem so its placed at a different location
+Gem.prototype.reset = function() {
+    this.init();
+}
+
+// A score for the player
+// Parameter: x, the x position to render the image
+// Parameter: y, the y position to render the image
+var Score = function(x, y) {
+    this.sprite = 'images/score.png';
+    this.x = x;
+    this.y = y;
+}
+
+// Draw the score on the screen, required method for game
+Score.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+}
+
+// A list available player character images
 var allSprites = [
     'images/char-boy.png', 
     'images/char-princess-girl.png',
@@ -92,9 +137,15 @@ var allSprites = [
     'images/char-cat-girl.png'
 ];
 
+// A list of collectible gem images
+var allCollectibles = [
+    'images/Gem Blue.png',
+    'images/Gem Green.png',
+    'images/Gem Orange.png'
+];
+
 // The number of rows and columns
-var numRows = 6;
-var numCols = 5;
+var numRows = 6, numCols = 7;
 // Origin of the display
 var originX = 0, originY = 0;
 // Delta used to move the player from one tile to the next
@@ -106,20 +157,37 @@ var playerMaxTileHeight = -20 + ((numRows - 1) * playerYTileDelta);
 // A list of enemy speed
 var allSpeeds = [100, 125, 150, 175, 200, 225, 250, 275, 300, 325, 350];
 // Delta used to move the enemy from one tile to the next
-var enemyYTileDelta = 83, enemyXTileDelta = 101;
-// Last x position in which the enemy is totally off the game board
-var enemyMaxTileWidth = numCols * enemyXTileDelta;
+var enemyXTileDelta = 101, enemyYTileDelta = 83;
+// Last x position in which the enemy is totally off the canvas
+var enemyMaxTileWidth = numCols * enemyXTileDelta
+// Delta used to randomly place the gem on a road tile
+var gemXTileDelta = 101, gemYTileDelta = 80;
 
-// Place all enemy objects in an array called allEnemies
+// A list of enemy objects
 var allEnemies = [
+    new Enemy(),
     new Enemy(),
     new Enemy(),
     new Enemy(),
     new Enemy()
 ];
 
-// Place the player object in a variable called player
+// The player object
 var player = new Player();
+
+// A list of gem objects
+var allGems = [new Gem()];
+
+// A list of lives object for the player
+var allLives = [
+    new Life(0, 0),
+    new Life(25, 0),
+    new Life(50, 0),
+    new Life(75, 0),
+    new Life(100, 0)];
+
+// The number of gems a player has collected
+var collected = [];
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
