@@ -115,11 +115,10 @@ Gem.prototype.reset = function() {
 }
 
 // A score for the player
-// Parameter: x, the x position to render the image
-// Parameter: y, the y position to render the image
+// Parameter: num, the score number (1, 2, 3, 4, ...)
 var Score = function(num) {
     this.sprite = 'images/Star.png';
-    this.x = scoreXStartPos - (num * scoreXTileDelta);
+    this.x = scoreXStartPos - ((num - 1) * scoreXTileDelta);
     this.y = 0;
 }
 
@@ -166,6 +165,8 @@ var gemXTileDelta = 101, gemYTileDelta = 80;
 var scoreXStartPos = 680;
 // Delta used to place the score image at the next position
 var scoreXTileDelta = 30;
+// The score the player needs to reach to win
+var endGameScore = 5;
 
 // A list of enemy objects
 var allEnemies = [
@@ -190,8 +191,9 @@ var allLives = [
     new Life(90, 0),
     new Life(120, 0)];
 
-// The number of gems a player has collected
-var collectedItems = [];
+// The score of the player, represents the number of
+// gems the player has collected
+var playerScore = [];
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
