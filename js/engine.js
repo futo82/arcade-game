@@ -48,7 +48,7 @@ var Engine = (function(global) {
         });
         allGems.forEach(function(gem) {
             if (checkCollision(gem)) {
-                collected.push(new Score());
+                collectedItems.push(new Score(collectedItems.length));
                 gem.reset();
             }
         });
@@ -98,6 +98,9 @@ var Engine = (function(global) {
         allGems.forEach(function(gem) {
             gem.render();
         });
+        collectedItems.forEach(function(item) {
+            item.render();
+        });
         player.render();
     }
 
@@ -118,7 +121,8 @@ var Engine = (function(global) {
         'images/Heart.png',
         'images/Gem Blue.png',
         'images/Gem Green.png',
-        'images/Gem Orange.png'
+        'images/Gem Orange.png',
+        'images/Star.png'
     ]);
     Resources.onReady(init);
 
