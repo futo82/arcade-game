@@ -13,15 +13,15 @@ h1 {
 }
 
 .btn-class {
-	display: inline-block;
-    height: 30px;
-    width: 125px;
-    background: green;
+	background: green;
     border: 2px solid rgba(33, 68, 72, 0.59);
-    color: black;
-    text-align: center;
-    font-size: 1.5em;
     border-radius: 50px;
+	color: black;
+	display: inline-block;
+    font-size: 1.5em;
+    height: 30px;
+    text-align: center;
+    width: 125px;
 }
 
 a.btn-class {
