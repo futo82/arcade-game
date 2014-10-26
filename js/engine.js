@@ -67,6 +67,7 @@ var Engine = (function(global) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         // Determine the state of the game
         if (playerScore.length == endGameScore) {
+        //if (true) {
             // The end game number of gems have been collected
             renderEndGame();
         } else if (allLives.length <= 0) {

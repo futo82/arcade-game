@@ -8,4 +8,22 @@ h1 {
 	text-decoration: underline;
 }
 
+#button-wrapper {
+	margin-top: 10px;
+}
 
+.btn-class {
+	display: inline-block;
+    height: 30px;
+    width: 125px;
+    background: green;
+    border: 2px solid rgba(33, 68, 72, 0.59);
+    color: black;
+    text-align: center;
+    font-size: 1.5em;
+    border-radius: 50px;
+}
+
+a.btn-class {
+    text-decoration: none;
+}
