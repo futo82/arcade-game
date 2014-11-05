@@ -8,7 +8,7 @@ There are two ways to play the game.
 
 1. Using your web browser go to http://futo82.github.io/arcade-game/index.html and play!
 2. Download the zip file from this repository and play locally.
-	a) Click the "Download ZIP" button below.
-	b) Unzip the arcade-game-master.zip file which will create a arcade-game-master directory.
-	c) Double click the index.html inside the arcade-game-master directory to load the game into a web browser.
-	d) Enjoy!
+   - Click the "Download ZIP" button below.
+   - Unzip the arcade-game-master.zip file which will create a arcade-game-master directory.
+   - Double click the index.html inside the arcade-game-master directory to load the game into a web browser.
+   - Enjoy!
